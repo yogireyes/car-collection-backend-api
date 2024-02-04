@@ -29,6 +29,12 @@ def get_car(current_user_token,id):
 @token_required
 def add_car(current_user_token):
     data = request.json
+    if 'brand' not in data:
+        return jsonify({"error":"provide brand field"}), 400
+    if 'model' not in data:
+        return jsonify({"error":"provide model field"}), 400
+    if 'year' not in data:
+        return jsonify({"error":"provide year field"}), 400
     new_car = CarCollection(brand=data['brand'], model=data['model'], year=data['year'],user_id=current_user_token.id)
     db.session.add(new_car)
     db.session.commit()
